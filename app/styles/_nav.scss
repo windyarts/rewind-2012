@@ -1,0 +1,31 @@
+.category {
+    height: 30px;
+    border-bottom: 1px solid #f4f4f4;
+    margin: 10px 0 20px;
+    a {
+        color: #b9b9b9;
+        position: relative;
+        @include float-left;
+        width: 11.111111111111%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 14px;
+        &:hover, &.active {
+            color: $green;
+        }
+        &.active:after {
+            $r: 2px;
+            $d: $r * 2;
+            content: "";
+            width: $d;
+            height: $d;
+            background: $green;
+            border-radius: $r;
+            position: absolute;
+            bottom: -1px - $r;
+            left: 50%;
+            margin-left: -$r;
+        }
+    }
+}

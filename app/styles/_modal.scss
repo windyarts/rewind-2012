@@ -1,0 +1,141 @@
+.modal {
+    @import "icon/*.png";
+    position: fixed;
+    _position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    .panel {
+        position: absolute;
+        left: 50%;
+        top: 30px;
+        width: 720px;
+        margin-left: -360px;
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 12px;
+            @include icon-sprite("close");
+            width: icon-sprite-width("close");
+            height: icon-sprite-height("close");
+            cursor: pointer;
+        }
+        .hd {
+            height: 55px;
+            background: #8ec242;
+            color: #fff;
+            font-size: 14px;
+            padding-left: 14px;
+            line-height: 55px;
+        }
+        .bd {
+            padding: 25px;
+            background: #fff;
+            @include pie-clearfix;
+        }
+        .slides {
+            background: black;
+            position: relative;
+            width: 270px;
+            height: 450px;
+            margin: 0 30px;
+            @include float-left;
+            .prev {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                @include icon-sprite("prev");
+                width: icon-sprite-width("prev");
+                height: icon-sprite-height("prev");
+                margin-top: icon-sprite-height("prev") * -0.5;
+                cursor: pointer;
+            }
+            .next {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                @include icon-sprite("next");
+                width: icon-sprite-width("next");
+                height: icon-sprite-height("next");
+                margin-top: icon-sprite-height("next") * -0.5;
+                cursor: pointer;
+            }
+        }
+        .detail {
+            overflow: hidden;
+            zoom: 1;
+            padding: 30px 0;
+            .app {
+                @include pie-clearfix;
+                margin-bottom: 30px;
+                .icon {
+                    width: 90px;
+                    height: 90px;
+                    border-radius: 20px;
+                    @include box-shadow(0 0 7px rgba(0,0,0,0.19));
+                    @include float-left;
+                    margin-right: 15px;
+                }
+                .name {
+                    padding-top: 13px;
+                    font-size: 14px;
+                }
+                .size {
+                    padding-top: 6px;
+                    font-size: 9px;
+                    color: #666;
+                }
+            }
+            .verdict {
+                position: relative;
+                min-height: 278px;
+                _height: 278px;
+                .title {
+                    color: #7f7f7f;
+                    border-bottom: 1px solid #e1e1e1;
+                    padding-left: 5px;
+                    padding-bottom: 5px;
+                }
+                .speech {
+                    padding-left: 5px;
+                    line-height: 24px;
+                    margin-top: 40px;
+                    strong {
+                        font-weight: normal;
+                        color: $green;
+                    }
+                }
+            }
+        }
+        %button {
+            position: absolute;
+            bottom: -22px;
+            border-radius: 3px;
+            text-align: center;
+        }
+        .btn-install {
+            @extend %button;
+            left: 0;
+            background: $green;
+            width: 58px;
+            height: 22px;
+            line-height: 22px;
+            @include box-shadow(0 0 9px rgba(0,0,0,0.05));
+            color: #fff;
+            @include text-shadow(#4d7e06 0 1px);
+        }
+        .btn-share {
+            @extend %button;
+            left: 75px;
+            width: 56px;
+            height: 20px;
+            border: 1px solid #d8d6d5;
+            line-height: 20px;
+            color: #6e6e6e;
+            @include text-shadow(#fff 0 1px);
+            background: #f5f5f5;
+        }
+    }
+}
