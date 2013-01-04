@@ -30,10 +30,10 @@
         color: #fff;
         text-align: center;
         font-size: 14px;
-    }
-    &.choice .badge {
-        width: 74px;
-        background: #fab14b;
+        &.choice {
+            width: 74px;
+            background: #fab14b;
+        }
     }
 
     .panel {
@@ -84,12 +84,24 @@
         background-color: rgba(255,255,255,0.9);
         .name {
             display: block;
-            margin: 0 10px 0;
+            margin: 10px auto 0;
             @include ellipsis;
-            text-align: center;
             line-height: 40px;
             font-size: 14px;
             margin-bottom: 10px;
+            position: relative;
+            padding-left: 35px;
+            width: 95px;
+            .icon {
+                position: absolute;
+                left: 0;
+                top: 5px;
+                width: 30px;
+                height: 30px;
+                background-position: center center;
+                border-radius: 6px;
+                background: black;
+            }
         }
         .info {
             display: block;
@@ -180,13 +192,13 @@
     }
     .preview {
         width: 50%;
-        padding: 25%;
-        .install, .detail {
+        .btn-install, .btn-detail {
             bottom: 25%;
         }
     }
     &:hover, &.block-hover {
         .preview {
+            padding: 25%;
             height: 50%;
         }
     }

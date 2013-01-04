@@ -23,7 +23,7 @@
                 <a href="###">都四个字</a>
             </div>
         </div>
-        <div class="container">
+        <div class="container" data-template-container>
             <div class="row">
                 <div href="###" class="block-1-2">
                     <span class="badge">1</span>
@@ -33,13 +33,13 @@
                     </span>
                     <span class="stamp"></span>
                     <span class="preview">
-                        <span class="name">What ever</span>
+                        <span class="name"><span class="icon"></span>What ever</span>
                         <span class="info">
                             <strong>用户名：</strong><br>
                             挺不错的
                         </span>
                         <a href="###" class="btn-install">安装</a>
-                        <a href="###" class="btn-detail">安装</a>
+                        <a href="###" class="btn-detail" data-modal="www.wandoujia.com">安装</a>
                     </span>
                 </div>
                 <a href="###" class="block-1-2"></a>
@@ -56,7 +56,7 @@
                         <span class="name">百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法</span>
                     </span>
                     <span class="preview">
-                        <span class="name">What ever</span>
+                        <span class="name"><span class="icon"></span>What ever</span>
                         <span class="info">
                             <strong>用户名：</strong><br>
                             挺不错的
@@ -73,7 +73,7 @@
                         <span class="name">百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法</span>
                     </span>
                     <span class="preview">
-                        <span class="name">What ever</span>
+                        <span class="name"><span class="icon"></span>What ever</span>
                         <span class="info">
                             <strong>用户名：</strong><br>
                             挺不错的
@@ -91,39 +91,87 @@
             </div>
         </div>
 
-        <div class="modal" style="display:none;">
-            <div class="panel">
+        <div class="modal" style="display:none;" data-widget-modal>
+            <div class="panel" data-widget-panel>
                 <div class="hd">精彩瞬间</div>
-                <div class="bd">
-                    <div class="content">
-                        <div class="slides">
-                            <span class="prev"></span>
-                            <span class="next"></span>
-                        </div>
-                        <div class="detail">
-                            <div class="app">
-                                <div class="icon"></div>
-                                <div class="name">Subway Suffer</div>
-                                <div class="size">3.88M</div>
-                            </div>
-                            <div class="verdict">
-                                <div class="title">评委评语</div>
-                                <div class="speech">
-                                    <strong>评委：</strong><br>
-                                    看着不错呢
-                                </div>
-                                <div class="speech">
-                                    <strong>评委：</strong><br>
-                                    看着不错呢</div>
-                                <a href="##" class="btn-install">安装</a>
-                                <a href="##" class="btn-share">分享</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="bd"></div>
                 <span class="close"></span>
             </div>
         </div>
+
+<script type="text/template" id="tpl-group">
+
+<% _.each(groups, function(group){ %>
+<div class="row">
+    <% _.each(group, function(block){ %>
+        <% if (block.type === 'app') { %>
+    <div class="block-<%= block.badge === 'choice' ? '2-5' : block.badge === 'best' ? '1-2' : '1-5' %>" style="background-image:url('<%= block.background[1] %>')">
+        <span class="panel">
+            <span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span>
+            <span class="name"><%= block.name %></span>
+        </span>
+        <% if (block.badge === 'choice') { %>
+            <span class="badge choice">特别推荐</span>
+        <% } else if (block.badge === 'best') { %>
+        <span class="stamp"></span>
+        <% } else { %>
+        <span class="badge"><%= block.badge %></span>
+        <% } %>
+        <span class="preview">
+            <span class="name"><span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span><%= block.name %></span>
+            <span class="info">
+                <strong><%= block.tip.name %>：</strong><br>
+                <%= block.tip.content %>
+            </span>
+            <a class="btn-install" href="<%= block.apk %>" name="<%= block.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
+            <a href="###" class="btn-detail" data-modal="<%= block.pn %>">详情</a>
+        </span>
+    </div>
+        <% } else { %>
+        <% } %>
+    <% }); %>
+</div>
+<% }); %>
+
+</script>
+<script type="text/template" id="tpl-modal">
+
+<div class="content">
+    <div class="slides">
+        <% _.each(data.screenshots, function(shot, i) { %>
+        <img data-index="<%= i %>" src="<%= shot %>" <%= i > 0 ? 'style="display:none;"' : '' %>>
+        <% }); %>
+        <span class="prev"></span>
+        <span class="next"></span>
+    </div>
+    <div class="detail">
+        <div class="app">
+            <div class="icon" style="background-image:url('<%= data.icons[1] %>')"></div>
+            <div class="name"><%= data.name %></div>
+            <div class="size">3.88M</div>
+        </div>
+        <div class="verdict">
+            <% if (data.intro) { %>
+            <div class="intro"><%= data.intro %></div>
+            <% } %>
+            <div class="title">评委评语</div>
+            <div class="speech">
+                <strong><%= data.comments[0].name %>：</strong><br>
+                <%= data.comments[0].content %>
+            </div>
+            <% if (!data.intro) { %>
+            <div class="speech">
+                <strong><%= data.comments[1].name %>：</strong><br>
+                <%= data.comments[1].content %>
+            </div>
+            <% } %>
+            <a class="btn-install" href="<%= data.apk %>" name="<%= data.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
+            <a href="##" class="btn-share">分享</a>
+        </div>
+    </div>
+</div>
+
+</script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
@@ -131,6 +179,9 @@
         <!-- Add your site or application content here -->
 
         <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/vendor/underscore.js"></script>
+        <script src="scripts/fakedata.js"></script>
+        <script src="scripts/main.js"></script>
 
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
