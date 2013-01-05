@@ -18,7 +18,7 @@
     background-position: center center;
     background-repeat: no-repeat;
 
-    & .badge {
+    .badge {
         position: absolute;
         right: -1px;
         top: -1px;
@@ -30,10 +30,10 @@
         color: #fff;
         text-align: center;
         font-size: 14px;
-        &.choice {
-            width: 74px;
-            background: #fab14b;
-        }
+    }
+    .choice {
+        width: 74px;
+        background: #fab14b;
     }
 
     .panel {
@@ -44,7 +44,7 @@
         height: 44px;
         background-color: #fff;
         background-color: rgba(255, 255, 255, 0.9);
-
+        overflow: hidden;
         .icon {
             position: absolute;
             left: 10px;
@@ -53,7 +53,6 @@
             height: 30px;
             background-position: center center;
             border-radius: 6px;
-            background: black;
         }
         .name {
             display: block;
@@ -64,11 +63,19 @@
         }
     }
 
-    .stamp {
+    .stamp-app {
         position: absolute;
         background: image-url("stamp.png") 0 0 no-repeat;
         width: image-width("stamp.png");
         height: image-height("stamp.png");
+        bottom: 10px;
+        right: 10px;
+    }
+    .stamp-game {
+        position: absolute;
+        background: image-url("stamp1.png") 0 0 no-repeat;
+        width: image-width("stamp1.png");
+        height: image-height("stamp1.png");
         bottom: 10px;
         right: 10px;
     }
@@ -79,9 +86,10 @@
         left: 0;
         top: 0;
         width: 100%;
-        height: 100%;
-        background-color: #fff;
+        height: 0;
+        opacity: 0;
         background-color: rgba(255,255,255,0.9);
+        background-color: #fff\9;
         .name {
             display: block;
             margin: 10px auto 0;
@@ -100,7 +108,6 @@
                 height: 30px;
                 background-position: center center;
                 border-radius: 6px;
-                background: black;
             }
         }
         .info {
@@ -143,14 +150,7 @@
             background: #fff;
         }
     }
-
-    & {
-        .preview {
-            opacity: 0;
-            height: 0;
-        }
-    }
-    &:hover, &.block-hover {
+    &:hover {
         .panel, .badge {
             opacity: 0;
         }
@@ -160,6 +160,7 @@
         }
     }
 }
+
 
 .block-1-5 {
     @extend %block, %app-block;
@@ -190,17 +191,25 @@
         width: 290px;
         height: 290px;
     }
-    .preview {
-        width: 50%;
-        .btn-install, .btn-detail {
-            bottom: 25%;
-        }
-    }
-    &:hover, &.block-hover {
+    &:hover {
         .preview {
+            width: 50%;
             padding: 25%;
             height: 50%;
+            .btn-install, .btn-detail {
+                bottom: 25%;
+            }
         }
+    }
+}
+
+.block-hover {
+    .preview {
+        height: 100%;
+    }
+    .badge {
+        right: 1px;
+        top: 1px;
     }
 }
 

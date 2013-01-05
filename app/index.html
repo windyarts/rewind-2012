@@ -8,24 +8,30 @@
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="stylesheet" href="styles/main.css">
+        <script src="http://wandoujia.com/api/wdapi.js"></script>
     </head>
     <body>
+        <div class="nav">
+            <a href="" class="data data-active"><i></i><span>有趣数据</span></a>
+            <a href="" class="best"><i></i><span>年度应用</span></a>
+            <a href="" class="cat"><i></i><span>分类最佳</span></a>
+        </div>
         <div class="category">
             <div class="container">
-                <a href="###" class="active">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
-                <a href="###">都四个字</a>
+                <a href="#group-0">都四个字</a>
+                <a href="#group-1" class="active">都四个字</a>
+                <a href="#group-2">都四个字</a>
+                <a href="#group-3">都四个字</a>
+                <a href="#group-4">都四个字</a>
+                <a href="#group-5">都四个字</a>
+                <a href="#group-6">都四个字</a>
+                <a href="#group-7">都四个字</a>
+                <a href="#group-8">都四个字</a>
             </div>
         </div>
         <div class="container" data-template-container>
             <div class="row">
-                <div href="###" class="block-1-2">
+                <div href="###" class="block-1-2 block-hover">
                     <span class="badge">1</span>
                     <span class="panel">
                         <span class="icon"></span>
@@ -49,7 +55,7 @@
                     <span>下载 Top5.</span>
                     <strong>社交通讯</strong>
                 </div>
-                <div href="###" class="block-1-5">
+                <div href="###" class="block-1-5 block-hover">
                     <span class="badge">1</span>
                     <span class="panel">
                         <span class="icon"></span>
@@ -66,8 +72,8 @@
                     </span>
                 </div>
                 <div href="###" class="block-1-5"></div>
-                <div href="###" class="block-2-5 choice">
-                    <span class="badge">特别推荐</span>
+                <div href="###" class="block-2-5 block-hover">
+                    <span class="badge choice">特别推荐</span>
                     <span class="panel">
                         <span class="icon"></span>
                         <span class="name">百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法百度输入法</span>
@@ -101,19 +107,21 @@
 
 <script type="text/template" id="tpl-group">
 
-<% _.each(groups, function(group){ %>
-<div class="row">
+<% _.each(groups, function(group, i){ %>
+<div id="group-<%= i %>" class="row">
     <% _.each(group, function(block){ %>
         <% if (block.type === 'app') { %>
-    <div class="block-<%= block.badge === 'choice' ? '2-5' : block.badge === 'best' ? '1-2' : '1-5' %>" style="background-image:url('<%= block.background[1] %>')">
+    <div class="block block-<%= block.badge === 'choice' ? '2-5' : block.badge === 'best' ? '1-2' : '1-5' %>" style="background-image:url('<%= block.background[1] %>')">
         <span class="panel">
             <span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span>
             <span class="name"><%= block.name %></span>
         </span>
         <% if (block.badge === 'choice') { %>
             <span class="badge choice">特别推荐</span>
-        <% } else if (block.badge === 'best') { %>
-        <span class="stamp"></span>
+        <% } else if (block.badge === 'best-app') { %>
+        <span class="stamp-app"></span>
+        <% } else if (block.badge === 'best-game') { %>
+        <span class="stamp-game"></span>
         <% } else { %>
         <span class="badge"><%= block.badge %></span>
         <% } %>
@@ -123,7 +131,7 @@
                 <strong><%= block.tip.name %>：</strong><br>
                 <%= block.tip.content %>
             </span>
-            <a class="btn-install" href="<%= block.apk %>" name="<%= block.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
+            <a class="btn-install" href="http://apps.wandoujia.com/apps/<%= block.pn %>/download" name="<%= block.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
             <a href="###" class="btn-detail" data-modal="<%= block.pn %>">详情</a>
         </span>
     </div>
@@ -136,7 +144,7 @@
 </script>
 <script type="text/template" id="tpl-modal">
 
-<div class="content">
+<div class="content <%= data.screenshot_type === 'v' ? '' : 'horizontal' %>">
     <div class="slides">
         <% _.each(data.screenshots, function(shot, i) { %>
         <img data-index="<%= i %>" src="<%= shot %>" <%= i > 0 ? 'style="display:none;"' : '' %>>
@@ -148,7 +156,7 @@
         <div class="app">
             <div class="icon" style="background-image:url('<%= data.icons[1] %>')"></div>
             <div class="name"><%= data.name %></div>
-            <div class="size">3.88M</div>
+            <div class="size"><a class="btn-install" href="http://apps.wandoujia.com/apps/<%= data.pn %>/download" name="<%= data.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a></div>
         </div>
         <div class="verdict">
             <% if (data.intro) { %>
@@ -159,14 +167,23 @@
                 <strong><%= data.comments[0].name %>：</strong><br>
                 <%= data.comments[0].content %>
             </div>
-            <% if (!data.intro) { %>
+            <% if (!data.intro && data.comments[1]) { %>
             <div class="speech">
                 <strong><%= data.comments[1].name %>：</strong><br>
                 <%= data.comments[1].content %>
             </div>
             <% } %>
-            <a class="btn-install" href="<%= data.apk %>" name="<%= data.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
             <a href="##" class="btn-share">分享</a>
+            <div class="share-bar">
+                <div class="icons">
+                    分享到：
+                    <a href="#" class="share-to-weibo"></a>
+                    <a href="#" class="share-to-qzone"></a>
+                    <a href="#" class="share-to-renren"></a>
+                    <a href="#" class="share-to-google"></a>
+                    <a href="#" class="share-to-facebook"></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

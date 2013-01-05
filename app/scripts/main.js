@@ -1,9 +1,18 @@
 /*global jQuery:true _:true data:true*/
 (function ($) {
     'use strict';
-    // Modal
     var $doc = $(document);
     var $win = $(window);
+    // Block
+    if ($.browser.msie && parseInt($.browser.version) < 7) {
+        $doc.on('mouseenter', '.block', function() {
+                $(this).addClass('block-hover');
+            })
+            .on('mouseleave', '.block', function() {
+                $(this).removeClass('block-hover');
+            });
+    }
+    // Modal
     var modal = {};
     modal.$modal = $('[data-widget-modal]');
     modal.$panel = modal.$modal.find('[data-widget-panel]');
@@ -37,11 +46,9 @@
     $doc.on('click', '[data-modal]', function (e) {
         e.preventDefault();
         var pn = $(this).attr('data-modal');
-        console.log(pn);
         var datum = _.chain(data).flatten(true).find(function (d) {
             return d.pn === pn;
         }).value();
-        console.log(datum);
         if (!datum) {
             return;
         }
@@ -52,4 +59,8 @@
 
     // render
     $('[data-template-container]').html(_.template($('#tpl-group').html(), {groups: data}));
+    // test
+    // modal._data = data[0][0];
+    // modal.$panel.find('.bd').html(_.template($('#tpl-modal').html(), {data: data[0][0]}));
+    // modal.open();
 })(jQuery);

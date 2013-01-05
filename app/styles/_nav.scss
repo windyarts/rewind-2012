@@ -1,12 +1,52 @@
+.nav {
+    @import "icon/*.png";
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    $width: (56px + 20px) * 3;
+    width: $width;
+    margin-left: $width / -2;
+    a {
+        @include float-left;
+        margin: 0 10px;
+        color: #fff;
+        width: 56px;
+        text-align: center;
+        i {
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            width: 56px;
+            height: 56px;
+        }
+        span {
+            @include opacity(0.5);
+        }
+        &:hover {
+            span {
+                @include opacity(1);
+            }
+        }
+    }
+    @each $icon in "data", "best", "cat" {
+        a.#{$icon} i {
+            @include icon-sprite($icon);
+        }
+        a.#{$icon}:hover i, a.#{$icon}-active i {
+            @include icon-sprite("#{$icon}_active");
+        }
+    }
+}
 .category {
     height: 30px;
     border-bottom: 1px solid #f4f4f4;
-    margin: 10px 0 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
     a {
         color: #b9b9b9;
         position: relative;
         @include float-left;
-        width: 11.111111111111%;
+        width: 11%;
         height: 30px;
         line-height: 30px;
         text-align: center;

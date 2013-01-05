@@ -1,9 +1,8 @@
 var data = [];
 var atom = {
     "type": "app",
-    "badge": "1",  // 1-5, choice, best
+    "badge": "1",
     "name": "xxx",
-    "apk": "http://www.wandoujia.com",
     "pn": "com.wandoujia",
     "tip": {
         "name": "Me",
@@ -14,14 +13,14 @@ var atom = {
         "http://wandoujia.com",
         "http://wandoujia.com"
     ],
-    "screenshot_type": "h", // h, v
+    "screenshot_type": "h",
     "icons": [
-        "http://www.wandoujia.com", // small
-        "http://www.wandoujia.com"  // large
+        "http://img.wdjimg.com/mms/icon/v1/b/ad/7d6af231a0a6191b093401f7e1836adb_78_78.png",
+        "http://img.wdjimg.com/mms/icon/v1/b/ad/7d6af231a0a6191b093401f7e1836adb_78_78.png"
     ],
     "background": [
-        "http://www.wandoujia.com", // 760
-        "http://www.wandoujia.com"  // 960
+        "http://img.wdjimg.com/mms/icon/v1/b/ad/7d6af231a0a6191b093401f7e1836adb_78_78.png",
+        "http://img.wdjimg.com/mms/icon/v1/b/ad/7d6af231a0a6191b093401f7e1836adb_78_78.png"
     ],
     "intro": "xxxx",
     "comments": [
@@ -36,12 +35,9 @@ var atom = {
     ],
     "share_pic": "http://wandoujia.com"
 };
-data.push([
-   atom, atom
-]);
-data.push([
-   atom, atom
-]);
-data.push([
-   atom, atom
-]);
+
+_.times(9, function () {
+    data.push([
+        atom, atom
+    ]);
+});

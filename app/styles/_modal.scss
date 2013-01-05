@@ -7,6 +7,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.8);
+    background: #ccc\9;
     .panel {
         position: absolute;
         left: 50%;
@@ -70,7 +71,7 @@
         }
         .detail {
             overflow: hidden;
-            zoom: 1;
+            position: relative;
             padding: 30px 0;
             .app {
                 @include pie-clearfix;
@@ -90,14 +91,15 @@
                 }
                 .size {
                     padding-top: 6px;
-                    font-size: 9px;
                     color: #666;
+                    line-height: 28px;
+                    font-size: 11px;
                 }
             }
             .verdict {
                 position: relative;
-                min-height: 278px;
-                _height: 278px;
+                min-height: 270px;
+                _height: 270px;
                 .intro {
                     clear: both;
                     margin: 0 0 20px;
@@ -120,32 +122,95 @@
             }
         }
         %button {
-            position: absolute;
-            bottom: -22px;
             border-radius: 3px;
             text-align: center;
         }
         .btn-install {
             @extend %button;
-            left: 0;
+            @include inline-block;
+            margin-right: 10px;
             background: $green;
             width: 58px;
             height: 22px;
+            font-size: 12px;
             line-height: 22px;
+            padding: 4px;
             @include box-shadow(0 0 9px rgba(0,0,0,0.05));
             color: #fff;
             @include text-shadow(#4d7e06 0 1px);
         }
         .btn-share {
             @extend %button;
-            left: 75px;
+            position: absolute;
+            bottom: -30px;
+            left: 5px;
             width: 56px;
             height: 20px;
             border: 1px solid #d8d6d5;
             line-height: 20px;
             color: #6e6e6e;
+            margin-bottom: 4px;
             @include text-shadow(#fff 0 1px);
             background: #f5f5f5;
+        }
+        .share-bar {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            border-top: 1px solid #ccc;
+            @include pie-clearfix;
+            padding-top: 5px;
+            .icons {
+                @include float-left;
+                color: #aaa;
+                margin: 0 5px;
+            }
+            @each $icon in "weibo", "qzone", "renren", "google", "facebook" {
+                a.share-to-#{$icon} {
+                    @include icon-sprite($icon);
+                    width: icon-sprite-width($icon);
+                    height: icon-sprite-height($icon);
+                    line-height: 0;
+                    @include inline-block;
+                    margin-right: 5px;
+                    &:hover {
+                        @include icon-sprite(#{$icon}_hover);
+                    }
+                }
+            }
+        }
+    }
+    & .panel .horizontal {
+        .slides {
+            width: 450px;
+            height: 270px;
+            float: none;
+            display: block;
+            margin: 0 auto;
+        }
+        .detail {
+            width: 450px;
+            margin: 0 auto;
+            .verdict {
+                min-height: auto;
+                _height: auto;
+                padding-bottom: 0;
+            }
+            .verdict .speech {
+                margin-top: 20px;
+            }
+        }
+        .btn-share {
+            position: static;
+            display: block;
+            margin: 10px 0 0 5px;
+        }
+        .share-bar {
+            position: static;
+            .icons {
+                @include float-right;
+            }
         }
     }
 }
