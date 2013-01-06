@@ -122,13 +122,13 @@ module.exports = function( grunt ) {
     rev: {
       js: 'scripts/**/*.js',
       css: 'styles/**/*.css',
-      img: 'images/**'
+      // img: 'images/**'
     },
 
     // usemin handler should point to the file containing
     // the usemin blocks to be parsed
     'usemin-handler': {
-      html: 'index.html'
+      html: 'best.html'
     },
 
     // update references in HTML/CSS to revved files
@@ -144,7 +144,7 @@ module.exports = function( grunt ) {
 
     // Optimizes JPGs and PNGs (with jpegtran & optipng)
     img: {
-      dist: '<config:rev.img>'
+      dist: 'images/**'
     },
 
     // rjs configuration. You don't necessarily need to specify the typical
