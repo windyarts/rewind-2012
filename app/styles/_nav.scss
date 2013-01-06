@@ -53,19 +53,19 @@
         font-size: 14px;
         &:hover, &.active {
             color: $green;
-        }
-        &.active:after {
-            $r: 2px;
-            $d: $r * 2;
-            content: "";
-            width: $d;
-            height: $d;
-            background: $green;
-            border-radius: $r;
-            position: absolute;
-            bottom: -1px - $r;
-            left: 50%;
-            margin-left: -$r;
+            &:after {
+                $r: 2px;
+                $d: $r * 2;
+                content: "";
+                width: $d;
+                height: $d;
+                background: $green;
+                border-radius: $r;
+                position: absolute;
+                bottom: -1px - $r;
+                left: 50%;
+                margin-left: -$r;
+            }
         }
     }
 }

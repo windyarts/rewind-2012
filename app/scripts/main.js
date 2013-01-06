@@ -4,11 +4,11 @@
     var $doc = $(document);
     var $win = $(window);
     // Block
-    if ($.browser.msie && parseInt($.browser.version) < 7) {
-        $doc.on('mouseenter', '.block', function() {
+    if ($.browser.msie && parseInt($.browser.version, 10) < 7) {
+        $doc.on('mouseenter', '.block', function () {
                 $(this).addClass('block-hover');
             })
-            .on('mouseleave', '.block', function() {
+            .on('mouseleave', '.block', function () {
                 $(this).removeClass('block-hover');
             });
     }
@@ -29,7 +29,7 @@
         modal.$panel.css('top', $win.scrollTop() + 30);
         modal.$modal.show();
     };
-    modal._changeScreenShot = function(goNext) {
+    modal._changeScreenShot = function (goNext) {
         var visibleShots = modal.$panel.find('.slides > img:visible');
         var curIndex = visibleShots.attr('data-index') * 1;
         var next = curIndex + (goNext ? 1 : -1);
@@ -37,9 +37,9 @@
         visibleShots.hide();
         modal.$panel.find('.slides > img').eq(next).show();
     };
-    modal.$panel.on('click', '.next', function() {
+    modal.$panel.on('click', '.next', function () {
         modal._changeScreenShot(true);
-    }).on('click', '.prev', function() {
+    }).on('click', '.prev', function () {
         modal._changeScreenShot(false);
     });
 
@@ -59,6 +59,17 @@
 
     // render
     $('[data-template-container]').html(_.template($('#tpl-group').html(), {groups: data}));
+    $('[data-spy="affix"]').each(function () {
+        var $spy = $(this),
+            data = $spy.data();
+
+        data.offset = data.offset || {};
+
+        data.offsetBottom && (data.offset.bottom = data.offsetBottom);
+        data.offsetTop && (data.offset.top = data.offsetTop);
+console.log($spy);
+        $spy.affix(data);
+    });
     // test
     // modal._data = data[0][0];
     // modal.$panel.find('.bd').html(_.template($('#tpl-modal').html(), {data: data[0][0]}));
