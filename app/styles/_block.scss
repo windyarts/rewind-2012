@@ -199,6 +199,12 @@
             width: 50%;
             padding: 25%;
             height: 50%;
+            .name {
+                margin-left: 20px;
+                @media (max-width: 959px) {
+                    margin-left: 5px;
+                }
+            }
             .btn-install, .btn-detail {
                 bottom: 25%;
             }
@@ -227,7 +233,7 @@
     }
     span {
         display: block;
-        color: #cbcbcb;
+        color: #757575;
     }
     strong {
         display: block;
@@ -245,14 +251,18 @@
     }
     span {
         font-size: 14px;
+        margin-left: 20px;
+        @media (max-width: 959px) {
+            margin-left: 14px;
+            font-size: 12px;
+        }
+    }
+    strong {
         margin: 40px 0 30px 20px;
         @media (max-width: 959px) {
             margin: 30px 0 20px 14px;
         }
-    }
-    strong {
-        margin-left: 20px;
-        font-size: 30px;
+        font-size: 24px;
         @media (max-width: 959px) {
             font-size: 30px * 0.7;
             margin-left: 14px;
@@ -263,14 +273,24 @@
 .block-text-2 {
     @extend %block, %text-block;
     span {
-        font-size: 21px;
-        margin: 60px 0 -10px 10px;
+        font-size: 24px;
         @media (max-width: 959px) {
-            font-size: 14px;
-            margin: 40px 0 -10px 10px;
+            font-size: 21px;
         }
+        text-align: center;
+        margin: 15px 0;
     }
     strong {
-        display: inline;
+        text-align: center;
+        font-size: 24px;
+        @media (max-width: 959px) {
+            font-size: 30px * 0.7;
+        }
+    }
+    .top {
+        margin-top: 50px;
+        @media (max-width: 959px) {
+            margin-top: 30px;
+        }
     }
 }

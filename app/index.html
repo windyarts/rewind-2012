@@ -122,20 +122,27 @@
         <span class="stamp-app"></span>
         <% } else if (block.badge === 'best-game') { %>
         <span class="stamp-game"></span>
-        <% } else { %>
+        <% } else if (block.badge) { %>
         <span class="badge"><%= block.badge %></span>
         <% } %>
         <span class="preview">
             <span class="name"><span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span><%= block.name %></span>
-            <span class="info">
-                <strong><%= block.tip.name %>：</strong><br>
-                <%= block.tip.content %>
-            </span>
+            <span class="info" title="<%= block.tip.content %>"><%= block.tip.content.length > 20 ? block.tip.content.slice(0, 18) + '...' : block.tip.content %></span>
             <a class="btn-install" href="http://apps.wandoujia.com/apps/<%= block.pn %>/download" name="<%= block.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
             <a href="###" class="btn-detail" data-modal="<%= block.pn %>">详情</a>
         </span>
     </div>
+        <% } else if (block.type === 'text' && block.cat === 'cat') { %>
+    <div class="block-text-1">
+        <strong><%= block.content[0] %></strong>
+        <span>下载量 Top5. &<br>豌豆荚特别推荐</span>
+    </div>
         <% } else { %>
+    <div class="block-text-2">
+        <strong class="top"><%= block.content[0] %></strong>
+        <span>&</span>
+        <strong><%= block.content[1] %></strong>
+    </div>
         <% } %>
     <% }); %>
 </div>
@@ -147,7 +154,7 @@
 <div class="content <%= data.screenshot_type === 'v' ? '' : 'horizontal' %>">
     <div class="slides">
         <% _.each(data.screenshots, function(shot, i) { %>
-        <img data-index="<%= i %>" src="<%= shot %>" <%= i > 0 ? 'style="display:none;"' : '' %>>
+        <img data-index="<%= i %>" src="<%= shot %>" <%= i > 0 ? 'style="display:none;"' : '' %> <%= data.screenshot_type === 'v' ? 'width="270"' : 'height="270"' %>>
         <% }); %>
         <span class="prev"></span>
         <span class="next"></span>
@@ -164,24 +171,30 @@
             <% } %>
             <div class="title">评委评语</div>
             <div class="speech">
+                <% if (data.comments[0].name) { %>
                 <strong><%= data.comments[0].name %>：</strong><br>
+                <% } %>
                 <%= data.comments[0].content %>
             </div>
             <% if (!data.intro && data.comments[1]) { %>
             <div class="speech">
+                <% if (data.comments[1].name) { %>
                 <strong><%= data.comments[1].name %>：</strong><br>
+                <% } %>
                 <%= data.comments[1].content %>
             </div>
             <% } %>
+<!--
             <a href="##" class="btn-share">分享</a>
+-->
             <div class="share-bar">
                 <div class="icons">
                     分享到：
-                    <a href="#" class="share-to-weibo"></a>
-                    <a href="#" class="share-to-qzone"></a>
-                    <a href="#" class="share-to-renren"></a>
-                    <a href="#" class="share-to-google"></a>
-                    <a href="#" class="share-to-facebook"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-weibo" onclick="Share.weibo(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-qzone" onclick="Share.qq(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-renren" onclick="Share.renren(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-google" onclick="Share.google(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-facebook" onclick="Share.facebook(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
                 </div>
             </div>
         </div>

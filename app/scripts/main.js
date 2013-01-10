@@ -3,6 +3,27 @@
     'use strict';
     var $doc = $(document);
     var $win = $(window);
+    var data = [];
+    // Sharing
+    window.Share = {
+        url: 'http://apps.wandoujia.com',
+        title: '豌豆荚 2012 Android 年度应用',
+        weibo: function(title, url, pic) {
+            window.open('http://service.weibo.com/share/share.php?appkey=1483181040&relateUid=1727978503&title=' + encodeURIComponent(title) + '&url='+encodeURIComponent(url)+'&pic='+encodeURIComponent(pic));
+        },
+        renren: function(title, url, pic) {
+            window.open('http://widget.renren.com/dialog/share?title='+encodeURIComponent(title)+'&resourceUrl='+encodeURIComponent(url)+'&pic='+encodeURIComponent(pic));
+        },
+        qq: function(title, url, pic) {
+            window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title='+encodeURIComponent(title)+'&summary=aaa&pics='+encodeURIComponent(pic)+'&url='+encodeURIComponent(pic));
+        },
+        google: function(url) {
+            window.open('https://plus.google.com/share?url='+encodeURIComponent(url));
+        },
+        facebook: function(title, url, pic) {
+            window.open('https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D='+encodeURIComponent(title)+'&p%5Bsummary%5D='+encodeURIComponent(Share.title)+'&p%5Burl%5D='+encodeURIComponent(url)+'&p%5Bimages%5D%5B0%5D='+encodeURIComponent(pic));
+        }
+    };
     // Block
     if ($.browser.msie && parseInt($.browser.version, 10) < 7) {
         $doc.on('mouseenter', '.block', function () {
@@ -24,7 +45,7 @@
     };
     modal.open = function () {
         modal.$modal
-            .width($doc.width())
+            .width($win.width())
             .height($doc.height());
         modal.$panel.css('top', $win.scrollTop() + 30);
         modal.$modal.show();
@@ -42,6 +63,11 @@
     }).on('click', '.prev', function () {
         modal._changeScreenShot(false);
     });
+    modal.$modal.on('click', function(e) {
+        if (this === e.target) {
+            modal.close();
+        }
+    });
 
     $doc.on('click', '[data-modal]', function (e) {
         e.preventDefault();
@@ -55,21 +81,23 @@
         modal._data = datum;
         modal.$panel.find('.bd').html(_.template($('#tpl-modal').html(), {data: datum}));
         modal.open();
+    }).on('click', '.preview', function(e) {
+        var target = $(e.target);
+        if (!target.hasClass('btn-install') && !target.hasClass('btn-detail')) {
+            $(this).find('[data-modal]').click();
+        }
     });
 
     // render
-    $('[data-template-container]').html(_.template($('#tpl-group').html(), {groups: data}));
-    $('[data-spy="affix"]').each(function () {
-        var $spy = $(this),
-            data = $spy.data();
-
-        data.offset = data.offset || {};
-
-        data.offsetBottom && (data.offset.bottom = data.offsetBottom);
-        data.offsetTop && (data.offset.top = data.offsetTop);
-console.log($spy);
-        $spy.affix(data);
+    $.ajax({
+        dataType: 'json',
+        url: meta.data,
+        success: function(d) {
+            data = d;
+            $('[data-template-container]').html(_.template($('#tpl-group').html(), {groups: data}));
+        }
     });
+
     // test
     // modal._data = data[0][0];
     // modal.$panel.find('.bd').html(_.template($('#tpl-modal').html(), {data: data[0][0]}));
