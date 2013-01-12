@@ -3,23 +3,32 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>豌豆荚 2012 Android 年度应用 - 年度应用</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="stylesheet" href="styles/main.css">
         <script src="http://wandoujia.com/api/wdapi.js"></script>
         <script>
+var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+// GA
+function ga(content) {
+    _gaq.push(['_trackEvent', 'Rewind-2012'].concat(content.split(':')));
+}
+function isWdj() {
+    return window.OneRingRequest !== undefined && window.OneRingStreaming !== undefined;
+}
 var meta = {
     data: 'api/best.json'
 };
         </script>
     </head>
     <body>
+        <a href="http://www.wandoujia.com" class="logo"></a>
         <div class="nav">
             <a href="data.html" class="data"><i></i><span>有趣数据</span></a>
             <a href="best.html" class="best best-active"><i></i><span>年度应用</span></a>
-            <a href="cat.html" class="cat"><i></i><span>分类最佳</span></a>
+            <a href="cat.html" class="cat" onclick="ga('b2c')"><i></i><span>分类最佳</span></a>
         </div>
         <div class="container" data-template-container style="margin-top: 20px;"></div>
 
@@ -37,7 +46,7 @@ var meta = {
 <div id="group-<%= i %>" class="row">
     <% _.each(group, function(block){ %>
         <% if (block.type === 'app') { %>
-    <div class="block block-<%= block.badge === 'choice' ? '2-5' : block.badge === 'best' ? '1-2' : '1-5' %>" style="background-image:url('<%= block.background[1] %>')">
+    <div class="block block-<%= block.badge === 'choice' ? '2-5' : block.badge === 'best' ? '1-2' : '1-5' %>" style="background-image:url('<%= isWdj() ? block.background[0] : block.background[1] %>')">
         <span class="panel">
             <span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span>
             <span class="name"><%= block.name %></span>
@@ -54,7 +63,7 @@ var meta = {
         <span class="preview">
             <span class="name"><span class="icon" style="background-image:url('<%= block.icons[0] %>')"></span><%= block.name %></span>
             <span class="info" title="<%= block.tip.content %>"><%= block.tip.content.length > 20 ? block.tip.content.slice(0, 18) + '...' : block.tip.content %></span>
-            <a class="btn-install" href="http://apps.wandoujia.com/apps/<%= block.pn %>/download" name="<%= block.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
+            <a class="btn-install" href="http://apps.wandoujia.com/apps/<%= block.pn %>/download<%= isWdj() ? '#content-type=application&name='+block.name+'&icon='+block.icons[1] : '' %>" name="<%= block.name %>" onclick="ga('download:<%= block.pn %>'); if (!isWdj()) return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a>
             <a href="###" class="btn-detail" data-modal="<%= block.pn %>">详情</a>
         </span>
     </div>
@@ -89,7 +98,7 @@ var meta = {
         <div class="app">
             <div class="icon" style="background-image:url('<%= data.icons[1] %>')"></div>
             <div class="name"><%= data.name %></div>
-            <div class="size"><a class="btn-install" href="http://apps.wandoujia.com/apps/<%= data.pn %>/download" name="<%= data.name %>" onclick="return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a></div>
+            <div class="size"><a class="btn-install" href="http://apps.wandoujia.com/apps/<%= data.pn %>/download<%= isWdj() ? '#content-type=application&name='+data.name+'&icon='+data.icons[1] : '' %>" name="<%= data.name %>" onclick="ga('download:<%= data.pn %>'); if (!isWdj()) return wdapi_apkdl_m(this, 'source');" title="通过豌豆荚下载">安装</a></div>
         </div>
         <div class="verdict">
             <% if (data.intro) { %>
@@ -110,19 +119,20 @@ var meta = {
                 <%= data.comments[1].content %>
             </div>
             <% } %>
-<!--
-            <a href="##" class="btn-share">分享</a>
--->
+            <% if (isWdj()) { %>
+            <a href="##" data-title="<%= data.name %>" data-content="" data-pic=<%data.share_pic%>"" class="btn-share">分享</a>
+            <% } else { %>
             <div class="share-bar">
                 <div class="icons">
                     分享到：
-                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-weibo" onclick="Share.weibo(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
-                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-qzone" onclick="Share.qq(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
-                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-renren" onclick="Share.renren(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
-                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-google" onclick="Share.google(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
-                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-facebook" onclick="Share.facebook(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-weibo" onclick="ga('share:<%= data.pn %>'); Share.weibo(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-qzone" onclick="ga('share:<%= data.pn %>'); Share.qq(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-renren" onclick="ga('share:<%= data.pn %>'); Share.renren(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-google" onclick="ga('share:<%= data.pn %>'); Share.google(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
+                    <a href="<%= Share.url %>" title="<%= Share.title %>" data-pic="<%= data.share_pic %>" class="share-to-facebook" onclick="ga('share:<%= data.pn %>'); Share.facebook(this.title, this.href, this.getAttribute('data-pic')); return false;"></a>
                 </div>
             </div>
+            <% } %>
         </div>
     </div>
 </div>
@@ -133,5 +143,12 @@ var meta = {
         <script src="scripts/vendor/underscore.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
+
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
     </body>
 </html>

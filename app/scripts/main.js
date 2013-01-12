@@ -6,22 +6,22 @@
     var data = [];
     // Sharing
     window.Share = {
-        url: 'http://apps.wandoujia.com',
+        url: 'http://www.wandoujia.com/2012rewind/best?utm_source=sharing&utm_campaign=2012rewind&utm_medium=',
         title: '豌豆荚 2012 Android 年度应用',
         weibo: function(title, url, pic) {
-            window.open('http://service.weibo.com/share/share.php?appkey=1483181040&relateUid=1727978503&title=' + encodeURIComponent(title) + '&url='+encodeURIComponent(url)+'&pic='+encodeURIComponent(pic));
+            window.open('http://service.weibo.com/share/share.php?appkey=1483181040&relateUid=1727978503&title=' + encodeURIComponent(title) + '&url='+encodeURIComponent(url + 'weibo')+'&pic='+encodeURIComponent(pic));
         },
         renren: function(title, url, pic) {
-            window.open('http://widget.renren.com/dialog/share?title='+encodeURIComponent(title)+'&resourceUrl='+encodeURIComponent(url)+'&pic='+encodeURIComponent(pic));
+            window.open('http://widget.renren.com/dialog/share?title='+encodeURIComponent(title)+'&resourceUrl='+encodeURIComponent(url + 'renren')+'&pic='+encodeURIComponent(pic));
         },
         qq: function(title, url, pic) {
-            window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title='+encodeURIComponent(title)+'&summary=aaa&pics='+encodeURIComponent(pic)+'&url='+encodeURIComponent(pic));
+            window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title='+encodeURIComponent(title)+'&summary=aaa&pics='+encodeURIComponent(pic)+'&url='+encodeURIComponent(url + 'qq'));
         },
         google: function(url) {
-            window.open('https://plus.google.com/share?url='+encodeURIComponent(url));
+            window.open('https://plus.google.com/share?url='+encodeURIComponent(url + 'google'));
         },
         facebook: function(title, url, pic) {
-            window.open('https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D='+encodeURIComponent(title)+'&p%5Bsummary%5D='+encodeURIComponent(Share.title)+'&p%5Burl%5D='+encodeURIComponent(url)+'&p%5Bimages%5D%5B0%5D='+encodeURIComponent(pic));
+            window.open('https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D='+encodeURIComponent(title)+'&p%5Bsummary%5D='+encodeURIComponent(Share.title)+'&p%5Burl%5D='+encodeURIComponent(url + 'facebook')+'&p%5Bimages%5D%5B0%5D='+encodeURIComponent(pic));
         }
     };
     // Block
@@ -81,6 +81,7 @@
         modal._data = datum;
         modal.$panel.find('.bd').html(_.template($('#tpl-modal').html(), {data: datum}));
         modal.open();
+        ga('detail:' + datum.pn);
     }).on('click', '.preview', function(e) {
         var target = $(e.target);
         if (!target.hasClass('btn-install') && !target.hasClass('btn-detail')) {
